@@ -7,7 +7,7 @@ const io = require('socket.io')(server, {
     origin: "*",
   },
 });
-const port = 4000;
+const port = process.env.PORT||4000;
 
 let waitingPlayer = null; // Store a socket for the first player waiting for a match
 
