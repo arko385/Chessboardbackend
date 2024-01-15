@@ -17,10 +17,17 @@ const handle=(socket,waitingPlayer)=>{
   socket.join(roomName);
   waitingPlayer.join(roomName);
   io.to(roomName).emit('roomCreated', roomName);
-  //colors
-  io.to(socket).emit('color', 'Your personalized white');
-  io.to(waitingPlayer).emit('color', 'Your personalized black');
 
+
+  //colors
+  io.to(socket.id).emit('color','w'); //giving white color
+  io.to(waitingPlayer.id).emit('color','b'); //giving black color
+
+ // io.to(socket.id).emit('color', 'Your personalized white');
+ // io.to(waitingPlayer.id).emit('color', 'Your personalized black');
+
+
+ //after player move it emits the msg to other player
   waitingPlayer.on("move",(payload)=>{
     io.to(roomName).emit("movedone",waitingPlayer.id,payload);
   })
