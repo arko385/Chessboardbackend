@@ -17,6 +17,9 @@ const handle=(socket,waitingPlayer)=>{
   socket.join(roomName);
   waitingPlayer.join(roomName);
   io.to(roomName).emit('roomCreated', roomName);
+  //colors
+  io.to(socket).emit('color', 'Your personalized white');
+  io.to(waitingPlayer).emit('color', 'Your personalized black');
 
   waitingPlayer.on("move",(payload)=>{
     io.to(roomName).emit("movedone",waitingPlayer.id,payload);
