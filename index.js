@@ -23,17 +23,15 @@ const handle=(socket,waitingPlayer)=>{
   io.to(socket.id).emit('color','w'); //giving white color
   io.to(waitingPlayer.id).emit('color','b'); //giving black color
 
- // io.to(socket.id).emit('color', 'Your personalized white');
- // io.to(waitingPlayer.id).emit('color', 'Your personalized black');
-
 
  //after player move it emits the msg to other player
   waitingPlayer.on("move",(payload)=>{
-    io.to(roomName).emit("movedone",waitingPlayer.id,payload);
+    //sending only to the other socket
+    io.to(socket.id).emit("movedone",waitingPlayer.id,payload);
   })
 
   socket.on("move",(payload)=>{
-    io.to(roomName).emit("movedone",socket.id,payload);
+   io.to(waitingPlayer.id).emit("movedone",socket.id,payload);
   })
   
   socket.on('message', (message) => {
